@@ -39,6 +39,6 @@ module.exports = {
         "react/prop-types": 0,
         "no-shadow": "off",
         "@typescript-eslint/no-shadow": ["error"],
-        "react/style-prop-object": "off"
+        "react/style-prop-object": "off",
       }
-}
+};
