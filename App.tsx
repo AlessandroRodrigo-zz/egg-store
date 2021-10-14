@@ -1,13 +1,14 @@
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import { Text } from 'react-native';
-import { Button, ThemeProvider } from 'react-native-magnus';
+import { ThemeProvider } from 'react-native-magnus';
+import Routes from './navigation';
+import theme from './src/styles/theme';
 
 export default function App(): JSX.Element {
   return (
-    <ThemeProvider>
-      <Button bg="black">Saiba mais</Button>
-      <Text>Teste do teste</Text>
+    <ThemeProvider theme={theme}>
+      <Routes colorScheme="light" />
+
       <StatusBar style="auto" />
     </ThemeProvider>
   );

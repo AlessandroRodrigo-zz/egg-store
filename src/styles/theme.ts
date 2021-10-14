@@ -1,7 +1,14 @@
-import { ThemeProviderProps } from "react-native-magnus";
+import { ThemeProviderProps } from 'react-native-magnus';
 
 const magnusUI: ThemeProviderProps = {
-    theme: {}
-}
+  theme: {
+    colors: {
+      primary: '#E26969',
+    },
+    fontSize: {
+      md: 24,
+    },
+  },
+};
 
-export default magnusUI.theme
+export default magnusUI.theme;
