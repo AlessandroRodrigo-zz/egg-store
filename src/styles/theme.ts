@@ -3,7 +3,8 @@ import { ThemeProviderProps } from 'react-native-magnus';
 const magnusUI: ThemeProviderProps = {
   theme: {
     colors: {
-      primary: '#E26969',
+      primary: '#FCD0A3',
+      primary_dark: '#FFB983',
     },
     fontSize: {
       md: 24,

@@ -5,13 +5,13 @@ import { TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/core';
 
 type ContainerProps = {
-  CustomContainerProps?: DivProps;
+  customContainerProps?: DivProps;
   shouldDisplayNavigationBackArrow?: boolean;
 };
 
 const Container: React.FC<ContainerProps> = ({
   children,
-  CustomContainerProps = {},
+  customContainerProps = {},
   shouldDisplayNavigationBackArrow,
 } = {}) => {
   const navigator = useNavigation();
@@ -36,7 +36,7 @@ const Container: React.FC<ContainerProps> = ({
         </Div>
       )}
 
-      <Div bg="white" flex={1} {...CustomContainerProps}>
+      <Div bg="white" flex={1} {...customContainerProps}>
         {children}
       </Div>
     </Div>
@@ -44,7 +44,7 @@ const Container: React.FC<ContainerProps> = ({
 };
 
 Container.defaultProps = {
-  CustomContainerProps: {},
+  customContainerProps: {},
   shouldDisplayNavigationBackArrow: false,
 };
 
