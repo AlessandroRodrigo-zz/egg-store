@@ -1,10 +1,27 @@
 import { useNavigation } from '@react-navigation/core';
-import React, { useCallback } from 'react';
+import React, { useCallback, useState } from 'react';
 import { Button, Div, Input, Text } from 'react-native-magnus';
 import Container from '../../layouts/container';
+import Firebase from '../../config/firebase';
 
 export default function Login(): JSX.Element {
+  const [email, setEmail] = useState<string>('');
+  const [password, setPassword] = useState<string>('');
   const navigator = useNavigation();
+  const FirebaseAuth = Firebase.auth();
+
+  const handleSignIn = useCallback(async () => {
+    try {
+      const userCredential = await FirebaseAuth.signInWithEmailAndPassword(
+        email,
+        password,
+      );
+
+      console.log(userCredential);
+    } catch (error) {
+      console.error(error.message);
+    }
+  }, [FirebaseAuth, email, password]);
 
   const handleSignUpRedirect = useCallback(() => {
     navigator.navigate('SignUp');
@@ -20,25 +37,50 @@ export default function Login(): JSX.Element {
           Entrar
         </Text>
 
-        <Input
-          mt="2xl"
-          borderColor="black"
-          borderWidth={2}
-          rounded="md"
-          placeholder="E-mail"
-          fontSize="lg"
-        />
-        <Input
-          mt="md"
-          borderColor="black"
-          borderWidth={2}
-          rounded="md"
-          placeholder="Senha"
-          secureTextEntry
-          fontSize="lg"
-        />
+        <Div mt="2xl">
+          <Text color="gray700" fontSize="sm">
+            E-mail
+          </Text>
+          <Input
+            mt="md"
+            h={50}
+            bg="white"
+            borderColor="gray400"
+            borderWidth={2}
+            rounded="md"
+            placeholder="E-mail"
+            fontSize="lg"
+            onChangeText={text => setEmail(text)}
+          />
+        </Div>
 
-        <Button block bg="black" rounded="md" mt="xl" fontSize="xl" h={55}>
+        <Div mt="xl">
+          <Text color="gray700" fontSize="sm">
+            Password
+          </Text>
+          <Input
+            mt="md"
+            h={50}
+            borderColor="gray400"
+            borderWidth={2}
+            rounded="md"
+            placeholder="Senha"
+            secureTextEntry
+            fontSize="lg"
+            onChangeText={text => setPassword(text)}
+          />
+        </Div>
+
+        <Button
+          block
+          bg="primary"
+          rounded="md"
+          mt="xl"
+          fontWeight="bold"
+          fontSize="xl"
+          h={55}
+          onPress={() => handleSignIn()}
+        >
           Entrar
         </Button>
         <Button

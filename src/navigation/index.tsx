@@ -6,8 +6,8 @@ import {
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import React from 'react';
 import { ColorSchemeName } from 'react-native';
-import Initial from '../src/screens/initial';
-import Login from '../src/screens/login';
+import Initial from '../screens/initial';
+import Login from '../screens/login';
 
 const Stack = createNativeStackNavigator();
 
