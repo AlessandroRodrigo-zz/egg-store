@@ -1,16 +1,14 @@
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import { ThemeProvider } from 'react-native-magnus';
-import Routes from './src/navigation';
-import theme from './src/styles/theme';
 import './src/config/firebase';
+import Routes from './src/navigation';
+import Providers from './src/providers';
 
 export default function App(): JSX.Element {
   return (
-    <ThemeProvider theme={theme}>
+    <Providers>
       <Routes colorScheme="light" />
-
       <StatusBar style="auto" />
-    </ThemeProvider>
+    </Providers>
   );
 }

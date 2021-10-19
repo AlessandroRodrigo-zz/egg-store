@@ -1,14 +1,17 @@
 import { useNavigation } from '@react-navigation/core';
 import React, { useCallback, useState } from 'react';
 import { Button, Div, Input, Text } from 'react-native-magnus';
-import Container from '../../layouts/container';
 import Firebase from '../../config/firebase';
+import useToast from '../../hooks/toast';
+import Container from '../../layouts/container';
 
 export default function Login(): JSX.Element {
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const navigator = useNavigation();
   const FirebaseAuth = Firebase.auth();
+
+  const { showToast } = useToast();
 
   const handleSignIn = useCallback(async () => {
     try {

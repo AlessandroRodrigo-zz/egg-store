@@ -1,10 +1,29 @@
 import { useNavigation } from '@react-navigation/core';
 import React, { useCallback } from 'react';
-import { ImageBackground } from 'react-native';
 import { Button, Div, Icon, Image, Text } from 'react-native-magnus';
+import Firebase, { googleAuthProvider } from '../../config/firebase';
+import useToast from '../../hooks/toast';
+import useUser from '../../hooks/user';
 
 const Initial: React.FC = () => {
   const navigator = useNavigation();
+  const FirebaseAuth = Firebase.auth();
+  const { showToast } = useToast();
+  const { signIn } = useUser();
+
+  const handleGoogleSignIn = useCallback(async () => {
+    try {
+      const { user } = await FirebaseAuth.signInWithPopup(googleAuthProvider);
+      signIn({
+        email: user?.email || '',
+        id: user?.uid,
+        imageProfile: user?.photoURL || '',
+        name: user?.displayName || '',
+      });
+    } catch (error) {
+      showToast('Não conseguimos te conectar com sua conta google', 'error');
+    }
+  }, [FirebaseAuth, showToast, signIn]);
 
   const handleRedirectToLogin = useCallback(() => {
     navigator.navigate('Login');
@@ -80,6 +99,7 @@ const Initial: React.FC = () => {
             borderColor="gray300"
             h={55}
             flex={1}
+            onPress={() => handleGoogleSignIn()}
           >
             <Icon name="google" />
           </Button>
