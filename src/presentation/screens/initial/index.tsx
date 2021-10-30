@@ -1,32 +1,62 @@
 import { useNavigation } from '@react-navigation/core';
 import React, { useCallback } from 'react';
 import { Button, Div, Icon, Image, Text } from 'react-native-magnus';
-import Firebase, { googleAuthProvider } from '../../config/firebase';
-import useToast from '../../hooks/toast';
-import useUser from '../../hooks/user';
+import Firebase from 'firebase/app';
+import useToast from '../../hooks/useToast';
+import useUser from '../../hooks/useUser';
+import AuthService from '../../../services/AuthService';
 
 const Initial: React.FC = () => {
   const navigator = useNavigation();
-  const FirebaseAuth = Firebase.auth();
   const { showToast } = useToast();
   const { signIn } = useUser();
 
   const handleGoogleSignIn = useCallback(async () => {
     try {
-      const { user } = await FirebaseAuth.signInWithPopup(googleAuthProvider);
+      const { user } =
+        (await AuthService.signInWithGoogle()) ||
+        ({} as Firebase.auth.UserCredential);
+
       signIn({
         email: user?.email || '',
         id: user?.uid,
         imageProfile: user?.photoURL || '',
         name: user?.displayName || '',
       });
+
+      showToast('Bem vindo!', 'success');
     } catch (error) {
-      showToast('Não conseguimos te conectar com sua conta google', 'error');
+      showToast('Não conseguimos te conectar com sua conta Google', 'error');
     }
-  }, [FirebaseAuth, showToast, signIn]);
+  }, [showToast, signIn]);
+
+  const handleFacebookSignIn = useCallback(async () => {
+    try {
+      const { user } =
+        (await AuthService.signInWithFacebook()) ||
+        ({} as Firebase.auth.UserCredential);
+
+      signIn({
+        email: user?.email || '',
+        id: user?.uid,
+        imageProfile: user?.photoURL || '',
+        name: user?.displayName || '',
+      });
+      showToast('Bem vindo!', 'success');
+    } catch (error) {
+      showToast(
+        'Não conseguimos te conectar com sua conta do Facebook',
+        'error',
+      );
+    }
+  }, [showToast, signIn]);
 
   const handleRedirectToLogin = useCallback(() => {
     navigator.navigate('Login');
+  }, [navigator]);
+
+  const handleRedirectToSignUp = useCallback(() => {
+    navigator.navigate('SignUp');
   }, [navigator]);
 
   return (
@@ -78,6 +108,7 @@ const Initial: React.FC = () => {
           fontWeight="bold"
           borderColor="gray300"
           block
+          onPress={() => handleRedirectToSignUp()}
           h={55}
         >
           Cadastrar
@@ -112,6 +143,7 @@ const Initial: React.FC = () => {
             h={55}
             flex={1}
             ml="md"
+            onPress={() => handleFacebookSignIn()}
           >
             <Icon name="facebook" fontFamily="FontAwesome" />
           </Button>
