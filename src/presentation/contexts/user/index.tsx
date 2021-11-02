@@ -1,5 +1,5 @@
 import React, { createContext, useCallback, useEffect, useState } from 'react';
-import CacheClient from '../../../data/CacheClient';
+import CacheClientWrapper from '../../../data/CacheClientWrapper';
 
 interface User {
   id: string;
@@ -25,7 +25,7 @@ export const UserProvider: React.FC = ({ children }) => {
     imageProfile: '',
     name: '',
   });
-  const cacheClient = new CacheClient();
+  const cacheClient = new CacheClientWrapper();
 
   const getUser = useCallback(async (): Promise<void> => {
     const userLocal = await cacheClient.getItem('@user');

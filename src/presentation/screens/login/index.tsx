@@ -3,15 +3,15 @@ import { Formik } from 'formik';
 import React, { useCallback, useMemo } from 'react';
 import { Button, Div, Input, Text } from 'react-native-magnus';
 import * as yup from 'yup';
-import useToast from '../../hooks/useToast';
+import useFeedbackDialog from '@/presentation/hooks/useFeedbackDialog';
+import AuthService from '../../../services/AuthService';
 import useUser from '../../hooks/useUser';
 import Container from '../../layouts/container';
-import AuthService from '../../../services/AuthService';
 
 const Login: React.FC = () => {
   const { signIn } = useUser();
-  const { showToast } = useToast();
   const navigator = useNavigation();
+  const { showFeedbackDialog } = useFeedbackDialog();
 
   const handleSignIn = useCallback(
     async (email: string, password: string) => {
@@ -28,15 +28,12 @@ const Login: React.FC = () => {
           name: user?.displayName || '',
         });
 
-        showToast('Login realizado com sucesso!', 'success');
+        showFeedbackDialog('Login realizado com sucesso!', 'success');
       } catch (error) {
-        showToast(
-          error.message || 'Não foi possível realizar o login',
-          'error',
-        );
+        showFeedbackDialog('Não foi possível realizar o login', 'error');
       }
     },
-    [showToast, signIn],
+    [showFeedbackDialog, signIn],
   );
 
   const validationSignInSchema = useMemo(() => {

@@ -1,7 +1,7 @@
 import AsyncStorageAdaptee from './adaptees/AsyncStorageAdaptee';
 import { CacheClientAdapter } from './adapters/CacheClientAdapter';
 
-export default class CacheClient implements CacheClientAdapter {
+export default class CacheClientWrapper implements CacheClientAdapter {
   constructor(
     private cacheClient: CacheClientAdapter = new AsyncStorageAdaptee(),
   ) {

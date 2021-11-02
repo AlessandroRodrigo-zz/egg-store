@@ -1,7 +1,7 @@
 import User from '../domain/models/User';
 import { AuthClientAdapter } from './adapters/AuthClientAdapter';
 
-export default class AuthClient implements AuthClientAdapter {
+export default class AuthClientWrapper implements AuthClientAdapter {
   constructor(private authClient: AuthClientAdapter) {
     this.authClient = authClient;
   }

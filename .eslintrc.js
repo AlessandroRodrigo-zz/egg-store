@@ -41,6 +41,6 @@ module.exports = {
         "@typescript-eslint/no-shadow": ["error"],
         "react/style-prop-object": "off",
         "react/jsx-props-no-spreading": "off",
-        "class-methods-use-this": "off"
+        "class-methods-use-this": "off",
       }
 };

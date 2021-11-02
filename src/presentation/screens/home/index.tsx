@@ -1,24 +1,28 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { FlatList, ActivityIndicator } from 'react-native';
+import { ActivityIndicator, FlatList } from 'react-native';
 import { Div, Image, Text } from 'react-native-magnus';
+import useFeedbackDialog from '@/presentation/hooks/useFeedbackDialog';
+import Banner from '../../../../assets/banner.png';
+import ProductRepository from '../../../data/repositories/ProductRepository';
+import ProductFactory from '../../../domain/factories/ProductFactory';
+import Product from '../../../domain/models/Product';
 import useUser from '../../hooks/useUser';
 import Container from '../../layouts/container';
-import Banner from '../../../assets/banner.png';
-import Product from '../../../domain/models/Product';
-import ProductRepository from '../../infra/repositories/ProductRepository';
-import ProductFactory from '../../../domain/factories/ProductFactory';
 
 const Home: React.FC = () => {
   const { user } = useUser();
   const [products, setProducts] = useState<Product[]>([]);
+  const { showFeedbackDialog } = useFeedbackDialog();
 
   const getProcuts = useCallback(async () => {
     const receivedProducts = await ProductRepository.index();
 
+    showFeedbackDialog('Produtos recuperados com sucesso!', 'success');
+
     if (receivedProducts) {
       setProducts(receivedProducts);
     }
-  }, []);
+  }, [showFeedbackDialog]);
 
   useEffect(() => {
     getProcuts();
