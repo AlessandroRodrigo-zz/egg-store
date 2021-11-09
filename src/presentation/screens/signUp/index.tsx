@@ -1,7 +1,7 @@
 import { useNavigation } from '@react-navigation/core';
 import { Formik } from 'formik';
 import React, { useCallback, useMemo } from 'react';
-import { Button, Div, Input, Text } from 'react-native-magnus';
+import { Button, Div, Icon, Input, Text } from 'react-native-magnus';
 import * as yup from 'yup';
 import useToast from '../../hooks/useToast';
 import useUser from '../../hooks/useUser';
@@ -95,6 +95,7 @@ const SignUp: React.FC = () => {
                   onBlur={handleBlur('email')}
                   value={values.email}
                   keyboardType="email-address"
+                  prefix={<Icon name="email" fontFamily="MaterialIcons" />}
                 />
                 <Text color="red500" fontSize="sm" mt="sm">
                   {touched.email && errors.email}
@@ -118,6 +119,7 @@ const SignUp: React.FC = () => {
                   onChangeText={handleChange('password')}
                   value={values.password}
                   keyboardType="default"
+                  prefix={<Icon name="lock" fontFamily="MaterialIcons" />}
                 />
                 <Text color="red500" fontSize="sm" mt="sm">
                   {touched.password && errors.password}

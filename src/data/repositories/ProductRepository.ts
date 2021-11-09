@@ -9,13 +9,11 @@ class ProductRepository extends AbstractRepository {
 
   async index() {
     try {
-      const procuts = await this.collection.get();
+      const products = await this.collection.get();
 
-      const factorizedProducts = procuts.docs.map(doc => {
+      return products.docs.map(doc => {
         return ProductFactory.create(doc.data() as Product);
       });
-
-      return factorizedProducts;
     } catch (error) {
       console.error(error.message);
       return null;
